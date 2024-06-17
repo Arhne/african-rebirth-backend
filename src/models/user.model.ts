@@ -11,7 +11,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    name: {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
       type: String,
       required: true,
     },
@@ -19,6 +23,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: "active",
+    },
+    type: {
+      type: String,
+      default: "user",
+      enum: ["user", "admin"],
+    },
+    qrcode: {
+      type: String,
+      default: "",
+    },
+    image: {
+      type: String,
+      default: "",
     },
   },
   { versionKey: false, timestamps: true }

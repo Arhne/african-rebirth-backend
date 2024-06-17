@@ -5,6 +5,13 @@ export const generateQrcodeForUrl = async (url: string) => {
   return qrCodeImage;
 };
 
+export const generateQrCodeForJson = async (data: object) => {
+  const dataString = JSON.stringify(data);
+
+  const qrcode = Qrcode.toDataURL(dataString);
+  return qrcode;
+};
+
 export const generateRandomSixDigitNumber = (): number => {
   return Math.floor(100000 + Math.random() * 900000);
 };
