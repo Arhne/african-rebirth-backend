@@ -129,6 +129,7 @@ class UserController {
       data: updatedUser.getPublicData(),
     });
   }
+  
   async updateImage(req: UserRequest, res: Response) {
     if (!req.file.path) {
       return res.status(400).send({
