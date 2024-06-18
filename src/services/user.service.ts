@@ -5,6 +5,19 @@ class UserService {
     const user = await userModel.create(data);
     return user;
   }
+  async findByEmail(email: string) {
+    const user = await userModel.findOne({ email: email });
+    return user;
+  }
+  async findById(id: string) {
+    const user = await userModel.findById(id);
+    return user;
+  }
+
+  async update(id: string, data: any) {
+    const user = await userModel.findByIdAndUpdate(id, data, { new: true });
+    return user;
+  }
 }
 
 export default new UserService();

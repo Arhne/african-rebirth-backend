@@ -1,6 +1,15 @@
-import mongoose from "mongoose";
+import { Schema, model, Document } from "mongoose";
+import dotenv from "dotenv";
+import { User, UserPublicData } from "../interfaces/user.interface.js";
+import jwt from "jsonwebtoken";
+dotenv.config();
 
-const userSchema = new mongoose.Schema(
+interface UserDocument extends User, Document {
+  generateToken: () => string;
+  getPublicData: () => UserPublicData;
+}
+
+const userSchema = new Schema<UserDocument>(
   {
     email: {
       type: String,
@@ -41,4 +50,29 @@ const userSchema = new mongoose.Schema(
   { versionKey: false, timestamps: true }
 );
 
-export const userModel = mongoose.model("User", userSchema);
+userSchema.methods.getPublicData = function (): UserPublicData {
+  return {
+    id: this._id,
+    firstname: this.firstname,
+    image: this.image,
+    qrcode: this.qrcode,
+    email: this.email,
+    type: this.type,
+    status: this.status,
+    lastname: this.lastname,
+  };
+};
+
+userSchema.methods.generateToken = function (): string {
+  if (!process.env.TOKEN_SECRET) {
+    throw new Error(
+      "TOKEN_SECRET is not defined in your environment variables."
+    );
+  }
+  const token = jwt.sign(this.getPublicData(), process.env.TOKEN_SECRET, {
+    expiresIn: "10d",
+  });
+  return token;
+};
+
+export const userModel = model<UserDocument>("User", userSchema);
