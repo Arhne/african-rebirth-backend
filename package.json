@@ -6,7 +6,9 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
-    "dev": "concurrently \"tsc --watch\" \"nodemon dist/app.js\""
+    "dev": "concurrently \"tsc --watch\" \"nodemon dist/app.js\"",
+    "push": "git add . && git commit -m \"%\" && git push origin \"%\""
+
   },
   "keywords": [],
   "author": "",

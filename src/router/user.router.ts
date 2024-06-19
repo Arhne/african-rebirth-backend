@@ -8,7 +8,7 @@ export const userRouter = express.Router();
 
 userRouter.post("/create", userController.createUser)
 userRouter.post("/login", userController.login)
-userRouter.put("/image",authentication, store.single("image"), userController.updateImage)
+userRouter.post("/image",authentication, store.single("image"), userController.uploadImage)
 userRouter.put("/update", authentication, userController.updateUser)
 userRouter.get("/:url", userController.generateQrCodeStringForUrl);
 userRouter.get("/link/:url", userController.generateQrCodeImageForUrl);

@@ -8,22 +8,22 @@ export interface UserRequest extends Request {
     password: string;
     firstname: string;
     lastname: string;
-    status: string;
+    itineraryPlan: string;
     type: "user" | "admin";
     qrcode: string;
-    image: string;
+    passport: string;
   };
 }
 
 export interface User {
   email: string;
-  password: string;
+  password?: string;
   firstname: string;
   lastname: string;
-  status: string;
+  itineraryPlan: string;
   type: "user" | "admin";
-  qrcode: string;
-  image: string;
+  qrcode?: string;
+  passport: string;
 }
 
 export interface UserPublicData {
@@ -31,8 +31,8 @@ export interface UserPublicData {
   email: string;
   firstname: string;
   lastname: string;
-  status: string;
+  itineraryPlan: string;
   type: "user" | "admin";
   qrcode?: string;
-  image: string;
+  passport: string;
 }

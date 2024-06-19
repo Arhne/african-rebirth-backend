@@ -18,6 +18,10 @@ class UserService {
     const user = await userModel.findByIdAndUpdate(id, data, { new: true });
     return user;
   }
+  async getAllUsers() {
+    const users = await userModel.find({ type: "user" });
+    return users;
+  }
 }
 
 export default new UserService();

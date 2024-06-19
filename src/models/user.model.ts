@@ -18,7 +18,6 @@ const userSchema = new Schema<UserDocument>(
     },
     password: {
       type: String,
-      required: true,
     },
     firstname: {
       type: String,
@@ -28,7 +27,7 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
-    status: {
+    itineraryPlan: {
       type: String,
       required: true,
       default: "active",
@@ -42,7 +41,7 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       default: "",
     },
-    image: {
+    passport: {
       type: String,
       default: "",
     },
@@ -54,11 +53,11 @@ userSchema.methods.getPublicData = function (): UserPublicData {
   return {
     id: this._id,
     firstname: this.firstname,
-    image: this.image,
+    passport: this.passport,
     qrcode: this.qrcode,
     email: this.email,
     type: this.type,
-    status: this.status,
+    itineraryPlan: this.itineraryPlan,
     lastname: this.lastname,
   };
 };

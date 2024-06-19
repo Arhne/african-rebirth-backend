@@ -5,7 +5,7 @@ import {
   generateQrcodeForUrl,
 } from "../utils/functions.js";
 import bcrypt from "bcryptjs";
-import { UserRequest } from "../interfaces/user.interface.js";
+import { User, UserRequest } from "../interfaces/user.interface.js";
 import { uploadImage } from "../config/cloudinary.config.js";
 
 class UserController {
@@ -30,13 +30,18 @@ class UserController {
   }
 
   async createUser(req: Request, res: Response) {
-    const data = {
+    const data: User = {
       email: req.body.email,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      password: bcrypt.hashSync(req.body.password, 10),
       type: req.body.type,
+      passport: req.body.passport,
+      itineraryPlan: req.body.itineraryPlan
+      
     };
+    if (data.password) {
+      data.password = bcrypt.hashSync(req.body.password, 10);
+    }
     console.log(data);
 
     const emailExists = await userService.findByEmail(data.email);
@@ -71,7 +76,7 @@ class UserController {
         .status(404)
         .send({ success: false, message: "Email does not exist" });
     }
-    const isMatch = bcrypt.compareSync(data.password, userExists.password);
+    const isMatch = bcrypt.compareSync(data.password, userExists.password as string);
     if (!isMatch) {
       return res
         .status(400)
@@ -108,7 +113,7 @@ class UserController {
     if (user.type !== "admin") {
       return res.status(403).send({
         success: false,
-        message: "You are not allowed to update this user",
+        message: "You are not allowed to update users",
       });
     }
     const updatedUser = await userService.update(data.id, data);
@@ -129,38 +134,26 @@ class UserController {
       data: updatedUser.getPublicData(),
     });
   }
-  
-  async updateImage(req: UserRequest, res: Response) {
+
+  async uploadImage(req: UserRequest, res: Response) {
     if (!req.file.path) {
       return res.status(400).send({
         success: false,
         message: "please provide an image file",
       });
     }
-    const id = req.user?.id;
-
-    if (!id) {
-      return res.status(400).send({
-        success: false,
-        message: "Invalid token",
-      });
-    }
-    const user = await userService.findById(id);
-
-    if (!user) {
-      return res.status(404).send({
-        suucess: false,
-        message: "User not found",
-      });
-    }
-
     const upload = await uploadImage(req.file?.path);
-    user.image = upload.url;
-    await user.save();
 
     return res.status(200).json({
       success: true,
-      data: user.getPublicData(),
+      url: upload.url,
+    });
+  }
+  async getUsers(req: UserRequest, res: Response) {
+    const users = await userService.getAllUsers();
+    return res.status(200).send({
+      success: true,
+      data: users.map((user) => user.getPublicData()),
     });
   }
 }
