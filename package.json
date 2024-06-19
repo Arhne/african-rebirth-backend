@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js",
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/app.js\"",
-    "push": "git add . && git commit -m \"%\" && git push origin \"%\""
-
+    "push": "node push.js"
   },
   "keywords": [],
   "author": "",
@@ -36,5 +35,8 @@
     "pino": "^9.1.0",
     "qrcode": "^1.5.3",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "yargs": "^17.7.2"
   }
 }
