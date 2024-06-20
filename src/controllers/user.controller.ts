@@ -36,8 +36,7 @@ class UserController {
       lastname: req.body.lastname,
       type: req.body.type,
       passport: req.body.passport,
-      itineraryPlan: req.body.itineraryPlan
-      
+      itineraryPlan: req.body.itineraryPlan,
     };
     if (data.password) {
       data.password = bcrypt.hashSync(req.body.password, 10);
@@ -76,7 +75,10 @@ class UserController {
         .status(404)
         .send({ success: false, message: "Email does not exist" });
     }
-    const isMatch = bcrypt.compareSync(data.password, userExists.password as string);
+    const isMatch = bcrypt.compareSync(
+      data.password,
+      userExists.password as string
+    );
     if (!isMatch) {
       return res
         .status(400)
@@ -154,6 +156,27 @@ class UserController {
     return res.status(200).send({
       success: true,
       data: users.map((user) => user.getPublicData()),
+    });
+  }
+
+  async getUserById(req: UserRequest, res: Response) {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid id",
+      });
+    }
+    const user = await userService.findById(id);
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+    return res.status(200).send({
+      success: true,
+      data: user.getPublicData(),
     });
   }
 }
