@@ -13,7 +13,6 @@ const userSchema = new Schema<UserDocument>(
   {
     email: {
       type: String,
-      required: true,
       unique: true,
     },
     password: {
@@ -21,11 +20,9 @@ const userSchema = new Schema<UserDocument>(
     },
     firstname: {
       type: String,
-      required: true,
     },
     lastname: {
       type: String,
-      required: true,
     },
     itineraryPlan: {
       type: String,
