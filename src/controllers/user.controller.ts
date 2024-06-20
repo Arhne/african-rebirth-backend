@@ -39,6 +39,7 @@ class UserController {
       itineraryPlan: req.body.itineraryPlan,
       inAttendance: req.body.inAttendance,
       status: req.body.status,
+      password: req.body.password
     };
     if (data.password) {
       data.password = bcrypt.hashSync(req.body.password, 10);
@@ -54,9 +55,9 @@ class UserController {
     }
     const user = await userService.create(data);
 
-    console.log(user);
+
     const qrcode = await generateQrCodeForJson(user.getPublicData());
-    console.log(qrcode);
+
     user.qrcode = qrcode;
     await user.save();
     return res.status(200).send({
