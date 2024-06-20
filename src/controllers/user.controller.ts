@@ -37,6 +37,8 @@ class UserController {
       type: req.body.type,
       passport: req.body.passport,
       itineraryPlan: req.body.itineraryPlan,
+      inAttendance: req.body.inAttendance,
+      status: req.body.status,
     };
     if (data.password) {
       data.password = bcrypt.hashSync(req.body.password, 10);

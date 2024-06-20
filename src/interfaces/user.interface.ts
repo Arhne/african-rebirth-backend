@@ -12,6 +12,8 @@ export interface UserRequest extends Request {
     type: "user" | "admin";
     qrcode: string;
     passport: string;
+    inAttendance: Boolean;
+    status: string;
   };
 }
 
@@ -24,6 +26,8 @@ export interface User {
   type: "user" | "admin";
   qrcode?: string;
   passport: string;
+  inAttendance: Boolean;
+  status: string;
 }
 
 export interface UserPublicData {
@@ -35,4 +39,6 @@ export interface UserPublicData {
   type: "user" | "admin";
   qrcode?: string;
   passport: string;
+  inAttendance: Boolean;
+  status: string;
 }

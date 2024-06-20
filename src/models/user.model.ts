@@ -45,6 +45,15 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       default: "",
     },
+    inAttendance: {
+      type: Boolean,
+      default: false,
+    },
+    status: {
+      type: String,
+      required: true,
+      default: "active",
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -59,6 +68,8 @@ userSchema.methods.getPublicData = function (): UserPublicData {
     type: this.type,
     itineraryPlan: this.itineraryPlan,
     lastname: this.lastname,
+    inAttendance: this.inAttendance,
+    status: this.status,
   };
 };
 
