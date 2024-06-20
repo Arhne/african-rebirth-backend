@@ -29,8 +29,6 @@ const userSchema = new Schema<UserDocument>(
     },
     itineraryPlan: {
       type: String,
-      required: true,
-      default: "active",
     },
     type: {
       type: String,
@@ -51,8 +49,6 @@ const userSchema = new Schema<UserDocument>(
     },
     status: {
       type: String,
-      required: true,
-      default: "active",
     },
   },
   { versionKey: false, timestamps: true }
