@@ -22,6 +22,13 @@ class UserService {
     const users = await userModel.find({ type: "user" });
     return users;
   }
+
+  async deleteUser(id: string) {
+    const user = await userModel.deleteOne({ _id: id });
+    if (user.deletedCount !== 1) {
+      return false;
+    } else return true;
+  }
 }
 
 export default new UserService();

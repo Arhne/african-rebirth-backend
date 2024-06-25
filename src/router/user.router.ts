@@ -10,6 +10,7 @@ userRouter.post("/create", userController.createUser)
 userRouter.post("/login", userController.login)
 userRouter.post("/image", store.single("image"), userController.uploadImage)
 userRouter.get("/", userController.getUsers)
+userRouter.delete("/delete", authentication, userController.deleteUser)
 userRouter.get("/id/:id", userController.getUserById)
 userRouter.put("/update", authentication, userController.updateUser)
 

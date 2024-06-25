@@ -39,7 +39,7 @@ class UserController {
       itineraryPlan: req.body.itineraryPlan,
       inAttendance: req.body.inAttendance,
       status: req.body.status,
-      password: req.body.password
+      password: req.body.password,
     };
     if (data.password) {
       data.password = bcrypt.hashSync(req.body.password, 10);
@@ -54,7 +54,6 @@ class UserController {
       });
     }
     const user = await userService.create(data);
-
 
     const qrcode = await generateQrCodeForJson(user.getPublicData());
 
@@ -180,6 +179,50 @@ class UserController {
     return res.status(200).send({
       success: true,
       data: user.getPublicData(),
+    });
+  }
+  async deleteUser(req: UserRequest, res: Response) {
+    const adminId = req.user?.id;
+    const admin = await userService.findById(adminId as string);
+    if (!admin) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid Token",
+      });
+    }
+
+    if (admin.type !== "admin") {
+      return res.status(403).send({
+        success: false,
+        message: "You are not allowed to delete users",
+      });
+    }
+
+    const id = req.body.id;
+    if (!id) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid id",
+      });
+    }
+    const user = await userService.findById(id);
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        message: "User not found",
+      });
+    }
+    const deleteUser = await userService.deleteUser(id);
+    if (!deleteUser) {
+      return res.status(500).send({
+        success: false,
+        message: "Failed",
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: `User with id: ${id} has been deleted successfully`,
     });
   }
 }
