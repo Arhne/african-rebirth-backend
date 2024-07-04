@@ -56,7 +56,6 @@ userSchema.methods.getPublicData = function (): UserPublicData {
     id: this._id,
     firstname: this.firstname,
     passport: this.passport,
-    qrcode: this.qrcode,
     email: this.email,
     type: this.type,
     itineraryPlan: this.itineraryPlan,

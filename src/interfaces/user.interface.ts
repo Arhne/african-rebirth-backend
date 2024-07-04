@@ -10,7 +10,6 @@ export interface UserRequest extends Request {
     lastname: string;
     itineraryPlan: string;
     type: "user" | "admin";
-    qrcode: string;
     passport: string;
     inAttendance: Boolean;
     status: string;
