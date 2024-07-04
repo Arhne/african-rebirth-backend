@@ -61,7 +61,7 @@ class UserController {
     await user.save();
     return res.status(200).send({
       success: true,
-      data: user.getPublicData(),
+      data: user,
     });
   }
 
@@ -86,13 +86,13 @@ class UserController {
         .status(400)
         .send({ success: false, message: "Incorrect Credentials" });
     }
-    const userPublicData = userExists.getPublicData();
+    
     return res.status(200).send({
       success: true,
       message: "Login successful",
       data: {
         token: userExists.generateToken(),
-        ...userPublicData,
+        user: userExists,
       },
     });
   }
@@ -135,7 +135,7 @@ class UserController {
     await user.save();
     return res.status(200).send({
       success: true,
-      data: updatedUser.getPublicData(),
+      data: updatedUser,
     });
   }
 
@@ -157,7 +157,7 @@ class UserController {
     const users = await userService.getAllUsers();
     return res.status(200).send({
       success: true,
-      data: users.map((user) => user.getPublicData()),
+      data: users,
     });
   }
 
@@ -178,7 +178,7 @@ class UserController {
     }
     return res.status(200).send({
       success: true,
-      data: user.getPublicData(),
+      data: user,
     });
   }
   async deleteUser(req: UserRequest, res: Response) {
