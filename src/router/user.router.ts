@@ -11,6 +11,8 @@ userRouter.post("/login", userController.login)
 userRouter.post("/image", store.single("image"), userController.uploadImage)
 userRouter.get("/", userController.getUsers)
 userRouter.delete("/delete", authentication, userController.deleteUser)
+userRouter.get("/location", userController.getLocation)
+userRouter.put("/location", userController.updateLocation)
 userRouter.get("/id/:id", userController.getUserById)
 userRouter.put("/update", authentication, userController.updateUser)
 

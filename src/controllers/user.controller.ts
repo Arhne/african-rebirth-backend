@@ -7,6 +7,7 @@ import {
 import bcrypt from "bcryptjs";
 import { User, UserRequest } from "../interfaces/user.interface.js";
 import { uploadImage } from "../config/cloudinary.config.js";
+import { locationModel } from "../models/location.model.js";
 
 class UserController {
   async generateQrCodeStringForUrl(req: Request, res: Response) {
@@ -86,7 +87,7 @@ class UserController {
         .status(400)
         .send({ success: false, message: "Incorrect Credentials" });
     }
-    
+
     return res.status(200).send({
       success: true,
       message: "Login successful",
@@ -158,6 +159,32 @@ class UserController {
     return res.status(200).send({
       success: true,
       data: users,
+    });
+  }
+
+  async updateLocation(req: UserRequest, res: Response) {
+    const locationToUpdate = req.body.location;
+    const location = await locationModel.findById("6689c59f171279187ea74fc3");
+    //@ts-ignore
+    location.location = locationToUpdate;
+    //@ts-ignore
+    await location.save();
+    return res.status(200).send({
+      success: true,
+      location: location,
+    });
+  }
+
+  async createLocation(req: UserRequest, res: Response) {
+    const loc = await locationModel.create({ location: "Here" });
+    return res.send(loc);
+  }
+
+  async getLocation(req: UserRequest, res: Response) {
+    const location = await locationModel.findById("6689c59f171279187ea74fc3");
+    return res.status(200).send({
+      success: true,
+      location: location,
     });
   }
 
