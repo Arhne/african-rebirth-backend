@@ -41,7 +41,7 @@ const userSchema = new Schema<UserDocument>(
       default: "",
     },
     inAttendance: {
-      type: Boolean,
+      type: String,
       default: false,
     },
     status: {

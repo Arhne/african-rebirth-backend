@@ -11,7 +11,7 @@ export interface UserRequest extends Request {
     itineraryPlan: string;
     type: "user" | "admin";
     passport: string;
-    inAttendance: Boolean;
+    inAttendance: String;
     status: string;
   };
 }
@@ -25,7 +25,7 @@ export interface User {
   type: "user" | "admin";
   qrcode?: string;
   passport: string;
-  inAttendance: Boolean;
+  inAttendance: String;
   status: string;
 }
 
@@ -38,6 +38,6 @@ export interface UserPublicData {
   type: "user" | "admin";
   qrcode?: string;
   passport: string;
-  inAttendance: Boolean;
+  inAttendance: String;
   status: string;
 }
